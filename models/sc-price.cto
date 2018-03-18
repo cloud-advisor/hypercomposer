@@ -1,0 +1,37 @@
+/**
+ * Sample business network definition.
+ */
+namespace org.jlabs.scprice
+
+/**
+ * The types of participant in the supply chain
+ */
+enum ParticipantType {
+  o SUPPLIER
+  o MANUFACTURER
+  o DISTRIBUTOR
+  o RETAILER
+}
+
+asset SCAsset identified by assetId {
+  o String assetId
+  --> SCParticipant owner
+  o Double assetPrice
+}
+
+participant SCParticipant identified by participantId {
+  o String participantId
+  o ParticipantType type
+  o String participantName
+}
+
+transaction SCTransaction {
+  --> SCAsset product
+  --> SCParticipant newOwner
+}
+
+event SCEvent {
+  --> SCAsset asset
+  o Double oldPrice
+  o Double newPrice
+}
